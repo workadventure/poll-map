@@ -195,7 +195,7 @@
                          "name":"allowApi",
                          "type":"bool",
                          "value":true
-                        },
+                        }, 
                         {
                          "name":"url",
                          "type":"string",
