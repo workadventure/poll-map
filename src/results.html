@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkAdventure poll</title>
+    <style>
+        body {
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            line-height: 20px;
+            color: #fff;
+        }
+        .poll-results {
+            background: #292929;
+            border-radius: 8px 8px 0 0;
+            border: 1px solid #666;
+            padding: 5px 10px 5px 10px;
+        }
+        .poll-header {
+            margin-bottom: 5px;
+        }
+        .poll-question {
+            font-weight: 600;
+        }
+        .poll-result-list {
+            list-style-type: none;
+        }
+        .poll-answer-header {
+            list-style-type: none;
+            margin-right: 20px;
+            display: flex;
+            justify-content: space-between;
+            float: left;
+        }
+        .poll-answer-vote-name {
+            list-style-type: none;
+            flex-shrink: 1;
+            overflow-wrap: anywhere;
+        }
+        .poll-answer-short-results {
+            list-style-type: none;
+            display: flex;
+            min-width: 10em;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .poll-bar-container {
+            list-style-type: none;
+            border-radius: 3px;
+            height: 6px;
+            background-color: #616161;
+            max-width: 160px;
+            margin-top: 3px;
+            flex: 1;
+        }
+        .poll-bar {
+            list-style-type: none;
+            border-radius: 3px;
+            height: 6px;
+            background-color: #d2d7df;
+            width: 50%;
+        }
+        #poll-bar-vote-a {
+            background-color: #04F17A;
+        }
+        #poll-bar-vote-b {
+            background-color: #315DFF;
+        }
+        #poll-bar-vote-c {
+            background-color: #F9E81E;
+        }
+        #poll-bar-vote-d {
+            background-color: #FF475A;
+        }
+        .poll-answer-vote-count-container {
+            list-style-type: none;
+            display: flex;
+        }
+        .poll-answer-vote-count {
+            list-style-type: none;
+            margin-left: 10px;
+            white-space: nowrap;
+            flex: 1;
+            text-align: right;
+        }
+    </style>
+    <script src="https://play.workadventu.re/iframe_api.js"></script>
+    <script>
+        /// <reference path="../node_modules/@workadventure/iframe-api-typings/iframe_api.d.ts" />
+
+        WA.onInit().then(() => {
+            let voteA = WA.state.voteA;
+            let voteB = WA.state.voteB;
+            let voteC = WA.state.voteC;
+            let voteD = WA.state.voteD;
+            let totalVotes = voteA + voteB + voteC + voteD;
+
+            document.getElementById("voteA").innerHTML = voteA;
+            document.getElementById("voteB").innerHTML = voteB;
+            document.getElementById("voteC").innerHTML = voteC;
+            document.getElementById("voteD").innerHTML = voteD;
+            document.getElementById("totalVotes").innerHTML = totalVotes;
+
+            if (totalVotes > 0) {
+                let percentageVoteA = (voteA / totalVotes * 100) + "%";
+                let percentageVoteB = (voteB / totalVotes * 100) + "%";
+                let percentageVoteC = (voteC / totalVotes * 100) + "%";
+                let percentageVoteD = (voteD / totalVotes * 100) + "%";
+
+                document.getElementById("percentageVoteA").innerHTML = document.getElementById("poll-bar-vote-a").style.width = percentageVoteA;
+                document.getElementById("percentageVoteB").innerHTML = document.getElementById("poll-bar-vote-b").style.width = percentageVoteB;
+                document.getElementById("percentageVoteC").innerHTML = document.getElementById("poll-bar-vote-c").style.width = percentageVoteC;
+                document.getElementById("percentageVoteD").innerHTML = document.getElementById("poll-bar-vote-d").style.width = percentageVoteD;   
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="poll-results">
+        <div class="poll-header">
+            <div>
+                <strong class="poll-question">Poll results</strong> <span>(<span id="totalVotes">0</span> votes)</span>
+            </div>
+        </div>
+        <ol class="poll-result-list">
+            <li>
+                <div class="poll-answer-header"><span class="poll-answer-vote-name">A</span></div>
+                <div class="poll-answer-short-results">
+                    <span class="poll-bar-container"><div class="poll-bar" id="poll-bar-vote-a" style="width: 0%;"></div></span>
+                    <div class="poll-answer-vote-count-container">
+                        <span class="poll-answer-vote-count">(<span id="voteA">0</span>) <span id="percentageVoteA">0%</span></span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="poll-answer-header"><span class="poll-answer-vote-name">B</span></div>
+                <div class="poll-answer-short-results">
+                    <span class="poll-bar-container"><div class="poll-bar" id="poll-bar-vote-b" style="width: 0%;"></div></span>
+                    <div class="poll-answer-vote-count-container">
+                        <span class="poll-answer-vote-count">(<span id="voteB">0</span>) <span id="percentageVoteB">0%</span></span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="poll-answer-header"><span class="poll-answer-vote-name">C</span></div>
+                <div class="poll-answer-short-results">
+                    <span class="poll-bar-container"><div class="poll-bar" id="poll-bar-vote-c" style="width: 0%;"></div></span>
+                    <div class="poll-answer-vote-count-container">
+                        <span class="poll-answer-vote-count">(<span id="voteC">0</span>) <span id="percentageVoteC">0%</span></span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="poll-answer-header"><span class="poll-answer-vote-name">D</span></div>
+                <div class="poll-answer-short-results">
+                    <span class="poll-bar-container"><div class="poll-bar" id="poll-bar-vote-d" style="width: 0%;"></div></span>
+                    <div class="poll-answer-vote-count-container">
+                        <span class="poll-answer-vote-count">(<span id="voteD">0</span>) <span id="percentageVoteD">0%</span></span>
+                    </div>
+                </div>
+            </li>
+        </ol>
+    </div>
+</body>
+</html>
