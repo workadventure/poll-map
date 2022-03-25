@@ -47,8 +47,8 @@
         }
         .poll-bar-container {
             list-style-type: none;
-            border-radius: 3px;
-            height: 6px;
+            border-radius: 2px;
+            height: 8px;
             background-color: #616161;
             max-width: 160px;
             margin-top: 3px;
@@ -56,8 +56,8 @@
         }
         .poll-bar {
             list-style-type: none;
-            border-radius: 3px;
-            height: 6px;
+            border-radius: 2px;
+            height: 8px;
             background-color: #d2d7df;
             width: 50%;
         }
@@ -89,31 +89,46 @@
     <script>
         /// <reference path="../node_modules/@workadventure/iframe-api-typings/iframe_api.d.ts" />
 
+        let voteA, voteB, voteC, voteD, totalVotes;
+
         WA.onInit().then(() => {
-            let voteA = WA.state.voteA;
-            let voteB = WA.state.voteB;
-            let voteC = WA.state.voteC;
-            let voteD = WA.state.voteD;
-            let totalVotes = voteA + voteB + voteC + voteD;
-
-            document.getElementById("voteA").innerHTML = voteA;
-            document.getElementById("voteB").innerHTML = voteB;
-            document.getElementById("voteC").innerHTML = voteC;
-            document.getElementById("voteD").innerHTML = voteD;
-            document.getElementById("totalVotes").innerHTML = totalVotes;
-
-            if (totalVotes > 0) {
-                let percentageVoteA = (voteA / totalVotes * 100) + "%";
-                let percentageVoteB = (voteB / totalVotes * 100) + "%";
-                let percentageVoteC = (voteC / totalVotes * 100) + "%";
-                let percentageVoteD = (voteD / totalVotes * 100) + "%";
-
-                document.getElementById("percentageVoteA").innerHTML = document.getElementById("poll-bar-vote-a").style.width = percentageVoteA;
-                document.getElementById("percentageVoteB").innerHTML = document.getElementById("poll-bar-vote-b").style.width = percentageVoteB;
-                document.getElementById("percentageVoteC").innerHTML = document.getElementById("poll-bar-vote-c").style.width = percentageVoteC;
-                document.getElementById("percentageVoteD").innerHTML = document.getElementById("poll-bar-vote-d").style.width = percentageVoteD;   
-            }
+            WA.state.onVariableChange('voteA').subscribe((newValue) => {
+                updatePoll(newValue, voteB, voteC, voteD)
+            });
+            WA.state.onVariableChange('voteB').subscribe((newValue) => {
+                updatePoll(voteA, newValue, voteC, voteD)
+            });
+            WA.state.onVariableChange('voteC').subscribe((newValue) => {
+                updatePoll(voteA, voteB, newValue, voteD)
+            });
+            WA.state.onVariableChange('voteD').subscribe((newValue) => {
+                updatePoll(voteA, voteB, voteC, newValue)
+            });
         });
+
+        function updatePoll(newVoteA = 0, newVoteB = 0, newVoteC = 0, newVoteD = 0) {
+            voteA = newVoteA;
+            voteB = newVoteB;
+            voteC = newVoteC;
+            voteD = newVoteD;
+            totalVotes = voteA + voteB + voteC + voteD;
+
+            document.getElementById("voteA").innerHTML = totalVotes > 0 ? voteA : 0;
+            document.getElementById("voteB").innerHTML = totalVotes > 0 ? voteB : 0;
+            document.getElementById("voteC").innerHTML = totalVotes > 0 ? voteC : 0;
+            document.getElementById("voteD").innerHTML = totalVotes > 0 ? voteD : 0;
+            document.getElementById("totalVotes").innerHTML = totalVotes > 0 ? totalVotes : 0;
+
+            let percentageVoteA = totalVotes > 0 ? parseInt(voteA / totalVotes * 100) + "%" : "0%";
+            let percentageVoteB = totalVotes > 0 ? parseInt(voteB / totalVotes * 100) + "%" : "0%";
+            let percentageVoteC = totalVotes > 0 ? parseInt(voteC / totalVotes * 100) + "%" : "0%";
+            let percentageVoteD = totalVotes > 0 ? parseInt(voteD / totalVotes * 100) + "%" : "0%";
+
+            document.getElementById("percentageVoteA").innerHTML = document.getElementById("poll-bar-vote-a").style.width = percentageVoteA;
+            document.getElementById("percentageVoteB").innerHTML = document.getElementById("poll-bar-vote-b").style.width = percentageVoteB;
+            document.getElementById("percentageVoteC").innerHTML = document.getElementById("poll-bar-vote-c").style.width = percentageVoteC;
+            document.getElementById("percentageVoteD").innerHTML = document.getElementById("poll-bar-vote-d").style.width = percentageVoteD;  
+        }
     </script>
 </head>
 <body>
