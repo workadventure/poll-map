@@ -12,7 +12,7 @@ WA.onInit().then(() => {
     console.log('Player tags: ',WA.player.tags)
     
     // Show reset tile for adminnistrators only
-    if (WA.player.tags.includes('editor')) {
+    if (WA.player.tags.includes('admin')) {
         WA.room.showLayer('resetZone')
     }
     
