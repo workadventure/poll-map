@@ -175,11 +175,6 @@
                         {
                          "name":"url",
                          "type":"string",
-                         "value":"src\/results.html"
-                        }, 
-                        {
-                         "name":"urlProd",
-                         "type":"string",
                          "value":"https:\/\/workadventure.github.io\/poll-map\/src\/results.html"
                         }],
                  "rotation":0,
