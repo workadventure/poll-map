@@ -20,32 +20,27 @@ WA.onInit().then(() => {
         {
             label: 'Reset',
             className: 'error',
-            callback: () => resetPoll(),
+            callback: () => WA.state.voteA = WA.state.voteB = WA.state.voteC = WA.state.voteD = 0,
         },
-        {
-            label: 'Stop',
-            className: 'normal',
-            callback: () => stopPoll(),
-        }
     ]
 
     WA.room.onEnterLayer('resetZone').subscribe(() => {
-        currentPopup = WA.ui.openPopup("resetPopup","Administration", buttons);
+        currentPopup = WA.ui.openPopup("resetPopup","Do you want to reset the poll?", buttons);
     })
     WA.room.onLeaveLayer('resetZone').subscribe(closePopup)
 
     // Voting zones
-    WA.room.onEnterLayer('A').subscribe(() => upVote("voteA"))
-    WA.room.onLeaveLayer('A').subscribe(() => downVote("voteA"))
+    WA.room.onEnterLayer('A').subscribe(() => (WA.state.voteA as number) ++)
+    WA.room.onLeaveLayer('A').subscribe(() => (WA.state.voteA as number) --)
 
-    WA.room.onEnterLayer('B').subscribe(() => upVote("voteB"))
-    WA.room.onLeaveLayer('B').subscribe(() => downVote("voteB"))
+    WA.room.onEnterLayer('B').subscribe(() => (WA.state.voteB as number) ++)
+    WA.room.onLeaveLayer('B').subscribe(() => (WA.state.voteB as number) --)
 
-    WA.room.onEnterLayer('C').subscribe(() => upVote("voteC"))
-    WA.room.onLeaveLayer('C').subscribe(() => downVote("voteC"))
+    WA.room.onEnterLayer('C').subscribe(() => (WA.state.voteC as number) ++)
+    WA.room.onLeaveLayer('C').subscribe(() => (WA.state.voteC as number) --)
 
-    WA.room.onEnterLayer('D').subscribe(() => upVote("voteD"))
-    WA.room.onLeaveLayer('D').subscribe(() => downVote("voteD"))
+    WA.room.onEnterLayer('D').subscribe(() => (WA.state.voteD as number) ++)
+    WA.room.onLeaveLayer('D').subscribe(() => (WA.state.voteD as number) --)
 
     // The line below bootstraps the Scripting API Extra library that adds a number of advanced properties/features to WorkAdventure
     bootstrapExtra().then(() => {
@@ -59,26 +54,4 @@ function closePopup(){
         currentPopup.close();
         currentPopup = undefined;
     }
-}
-
-function resetPoll(){
-    WA.state.voteA = 0;
-    WA.state.voteB = 0;
-    WA.state.voteC = 0;
-    WA.state.voteD = 0;
-}
-
-function stopPoll(){
-    console.log('stop')
-    // subscription.unsubscribe();
-}
-
-function upVote(answer: string){
-    let answerValue = WA.state[answer] as number;
-    answerValue ++;
-}
-
-function downVote(answer: string){
-    let answerValue = WA.state[answer] as number;
-    answerValue --;
 }
