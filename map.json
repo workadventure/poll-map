@@ -306,7 +306,7 @@
         {
          "name":"mapDescription",
          "type":"string",
-         "value":"A perfect virtual office to get started with WorkAdventure!"
+         "value":"A map to organize your polls on WorkAdventure!"
         }, 
         {
          "name":"mapImage",
@@ -316,12 +316,12 @@
         {
          "name":"mapLink",
          "type":"string",
-         "value":"https:\/\/thecodingmachine.github.io\/workadventure-map-starter-kit\/map.json"
+         "value":"https:\/\/workadventure.github.io\/poll-map\/map.json"
         }, 
         {
          "name":"mapName",
          "type":"string",
-         "value":"Office"
+         "value":"Poll"
         }, 
         {
          "name":"script",
